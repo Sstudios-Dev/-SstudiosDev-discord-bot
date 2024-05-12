@@ -35,7 +35,28 @@ client.once("ready", () => {
         client.user.setActivity(activity.name, {type:activity.type});
     }
 
-    setInterval(updatePresence, 10000) // 10 Segundos
+    setInterval(updatePresence, 10000)
+
+    const channel = client.channels.cache.get("");
+
+    if (!channel) {
+        console.error("Could not find the channel.");
+        return;
+    }
+
+    setInterval(async () => {
+        try {
+            const animeImageUrl = await getRandomAnimeImageUrl();
+            const embed = new EmbedBuilder()
+                .setTitle("Random Anime Image")
+                .setColor(Math.floor(Math.random() * 16777215))
+                .setImage(animeImageUrl);
+
+            await channel.send({ embeds: [embed] });
+        } catch (error) {
+            console.error("Failed to send anime image:", error.message);
+        }
+    }, 600000);
 
 });
 
@@ -123,11 +144,11 @@ client.on("messageCreate", async (message) => {
                 const embed = new EmbedBuilder()
                     .setTitle('Random Image')
                     .setDescription(`[Enlace](${imageUrlFull})`)
-                    .setColor(Math.floor(Math.random() * 16777215)) // Color aleatorio
+                    .setColor(Math.floor(Math.random() * 16777215))
                     .setImage(imageUrlFull);
 
                 await initialMessage.edit({ content: 'Here is your random image:', embeds: [embed] });
-            }, 3000); // Espera 3 segundos antes de editar el mensaje
+            }, 3000);
 
         } catch (error) {
             console.error('Error when obtaining the random image:', error.message);
@@ -146,7 +167,7 @@ client.on("messageCreate", async (message) => {
                 .setImage(animeImageUrl);
               
               await initialMessage.edit({ content: 'Here is your random anime image:', embeds: [embed] });
-            }, 3000); // Espera 3 segundos antes de editar el mensaje
+            }, 3000);
       
           } catch (error) {
             console.error('Failed to get anime image:', error.message);
