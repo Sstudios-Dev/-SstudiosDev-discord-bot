@@ -1,0 +1,7 @@
+{
+    "token": "YOUR TOKEN IN THE BOT",
+    "prefix": "s!",
+    "onlineMessageChannelId": "",
+    "onlineMessage": "[+] I'm online! `-` ",
+    "showTimestamp": true
+}
