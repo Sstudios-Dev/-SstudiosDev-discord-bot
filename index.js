@@ -41,7 +41,7 @@ client.once("ready", () => {
 
 client.on("guildMemberAdd", async (member) => {
     // ID of the channel where the welcome message will be sent
-    const welcomeChannelId = "1193826509140529182"; // Replace with the ID of your welcome channel
+    const welcomeChannelId = ""; // Replace with the ID of your welcome channel
     member.send(`Welcome to ${member.guild.name}! We hope you enjoy your stay on our server.`);
 
     // Find the channel by its ID
@@ -53,7 +53,7 @@ client.on("guildMemberAdd", async (member) => {
         welcomeChannel.send(`Welcome to the server, ${member.user}! We hope you enjoy your stay.`);
 
         // ID of the role to be assigned to the new member
-        const roleId = "1166130522519519304"; // Replace with the ID of the role you want to assign
+        const roleId = ""; // Replace with the ID of the role you want to assign
 
         // Find the role by its ID
         const role = member.guild.roles.cache.get(roleId);
