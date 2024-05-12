@@ -163,7 +163,7 @@ client.on("messageCreate", async (message) => {
               const embed = new EmbedBuilder()
                 .setTitle('Random Anime Image')
                 .setDescription(`[Link](${animeImageUrl})`)
-                .setColor(Math.floor(Math.random() * 16777215)) // Color aleatorio
+                .setColor(Math.floor(Math.random() * 16777215))
                 .setImage(animeImageUrl);
               
               await initialMessage.edit({ content: 'Here is your random anime image:', embeds: [embed] });
@@ -173,7 +173,38 @@ client.on("messageCreate", async (message) => {
             console.error('Failed to get anime image:', error.message);
             message.channel.send('Failed to get anime image.');
           }
+    } else if (command === "servers") {
+        const guildsInfo = client.guilds.cache.map(guild => {
+            const owner = guild.owner ? guild.owner.user.tag : "Unknown";
+            const region = guild.region ? guild.region : "Unknown";
+            const createdAt = guild.createdAt ? guild.createdAt.toDateString() : "Unknown";
+    
+            const channels = guild.channels.cache.map(channel => {
+                return `${channel.type === "GUILD_TEXT" ? "#" : ""}${channel.name}`;
+            }).join(", ");
+    
+            const roles = guild.roles.cache.size;
+    
+            const emojis = guild.emojis.cache.size;
+    
+            return `**${guild.name}** (ID: ${guild.id})
+            • Members: ${guild.memberCount}
+            • Owner: ${owner}
+            • Region: ${region}
+            • Created at: ${createdAt}
+            • Channels: ${channels}
+            • Roles: ${roles}
+            • Emojis: ${emojis}`;
+        });
+    
+        const embed = new EmbedBuilder()
+            .setTitle(`Server information (${client.guilds.cache.size})`)
+            .setDescription(guildsInfo.join("\n\n"))
+            .setColor(Math.floor(Math.random() * 16777215))
+    
+        message.channel.send({ embeds: [embed] });
     }
+      
 });
 
 client.login(config.token);
